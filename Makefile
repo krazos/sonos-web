@@ -5,14 +5,23 @@
 # the full backend.
 # This is mostly equivalent to what sonos-web-cli does.
 
-serve: server/.env server/dist server/node_modules
-	cd server && NODE_ENV="production" node src/server.js
+serve: out/.env out/dist out/src out/node_modules
+	cd out && NODE_ENV="production" node src/server.js
 
-server/.env:
-	cp server/.env.production $@
+out:
+	mkdir $@
 
-server/dist: client/dist
-	cp -rf client/dist/ server/
+out/.env: server/.env.production | out
+	cp $< $@
+
+out/src: server/src | out
+	cp -rf $< out/
+
+out/node_modules: | server/node_modules out
+	cp -rf server/node_modules out/	
+
+out/dist: client/dist
+	cp -rf client/dist out/
 
 client/dist: client/node_modules/.bin/vue-cli-service
 	cd client && node_modules/.bin/vue-cli-service build
@@ -36,4 +45,5 @@ clean:
 	rm -rf client/dist
 	rm -rf server/node_modules
 	rm -rf server/dist
-	rm -f server/.env
+	rm -rf out
+
