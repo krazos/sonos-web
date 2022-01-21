@@ -38,17 +38,43 @@ make serve
 ## Docker Support
 
 A minimal pre-built Docker image is available on [Dockerhub](https://hub.docker.com/r/kcghst/sonos-web).
-Only Linux is currently supported, as you need [Docker's host networking feature](https://docs.docker.com/network/host/) for Sonos device discovery.
+Only Linux is currently supported, as you need [Docker's host networking feature](https://docs.docker.com/network/host/) for Sonos device discovery. The actual web server uses port 5050 by default.
 
-The following command starts up the web server listening on port 5050:
+From CLI or script:
 ```
-docker run -it --net=host kcghst/sonos-web
+docker run -it --net=host -e PORT=5050 kcghst/sonos-web
+```
+
+docker-compose.yml:
+```
+  sonos:
+    container_name: sonos
+    image: kcghst/sonos-web:latest
+    network_mode: "host"
+	environment:
+	  - PORT=5050
+```
+
+nginx.conf proxy:
+```
+	server {
+		server_name sonos.*;
+
+		location / {
+            proxy_pass http://$hostip:5050;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Protocol $scheme;
+            proxy_set_header X-Forwarded-Host $http_host;
+		}
+	}
 ```
 
 ## TODO?
 
 * It might be possible to avoid host networking by allowing manual pre-configuration of Sonos hosts
-* Should probably make the web server port configurable
 * The Music Library doesn't work for me personally, I think it requires the Windows share?
 * Would be nice if it could browse music from a DLNA server, even nicer if it had access to everything the Sonos app does
 
