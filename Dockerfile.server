@@ -1,0 +1,8 @@
+FROM node:16-slim
+
+ADD out /project
+
+ENV NODE_ENV=production
+WORKDIR /project
+CMD node src/server.js
+
