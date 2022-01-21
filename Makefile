@@ -26,7 +26,6 @@ out/built.stamp: client/dist.tar
 	cp server/.env.production out/.env
 	cp -rf server/src out/
 	cp -rf server/node_modules out/
-	cp -rf client/dist out/
 	touch $@
 
 server-image: server-image.stamp
@@ -40,6 +39,7 @@ server-image.stamp: Dockerfile.server out/built.stamp
 clean:
 	rm -rf client/node_modules
 	rm -rf client/dist
+	rm -rf client/dist.tar
 	rm -rf server/node_modules
 	rm -rf server/dist
 	rm -rf out
