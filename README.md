@@ -43,6 +43,7 @@ Only Linux is currently supported, as you need [Docker's host networking feature
 The following command starts up the web server listening on port 5050:
 ```
 docker run -it --net=host kcghst/sonos-web
+```
 
 ## TODO?
 
