@@ -12,7 +12,7 @@ Sonos Web has been tested on Windows 10, macOS, Linux, and Raspbian Stretch Lite
 
 [Check out the following Youtube video](https://youtu.be/0q8Z-XV81Z4) to see a brief demo of the system in use. (v0.5.2)
 
-## Fork!
+## Oh Fork it's a Fork!
 
 This is a fork of [Villarrealized's excellent project](https://github.com/Villarrealized/sonos-web), which appears to be abandoned.
 Despite only being a couple years old, the project has rotted quite quickly and developed many breaking issues.
@@ -25,13 +25,33 @@ When I attempted to get this project working for myself I found that:
 * Even when I got it running with fixes, I still needed to fix an error from [node-sonos](https://github.com/bencevans/node-sonos) to get things running.
 
 So I have added a Makefile that builds and runs a server right from these sources, no sonos-web-cli necessary. Just do `make serve`.
-TODO: I play on adding a Dockerfile and adding the resulting Docker image to dockerhub as well.
 Right now this project depends on a fork of node-sonos, but I submitted a pull request to get the fixes upstream.
 
+I have also added a [Docker image to Dockerhub](https://hub.docker.com/r/kcghst/sonos-web) to make the project very convenient for Linux Docker users.
+
+## Build and run from sources
+
+```
+make serve
+```
+
+## Docker Support
+
+A minimal pre-built Docker image is available on [Dockerhub](https://hub.docker.com/r/kcghst/sonos-web).
+Only Linux is currently supported, as you need [Docker's host networking feature](https://docs.docker.com/network/host/) for Sonos device discovery.
+
+The following command starts up the web server listening on port 5050:
+```
+docker run -it --net=host kcghst/sonos-web
+
+## TODO?
+
+* It might be possible to avoid host networking by allowing manual pre-configuration of Sonos hosts
+* Should probably make the web server port configurable
+* The Music Library doesn't work for me personally, I think it requires the Windows share?
+* Would be nice if it could browse music from a DLNA server, even nicer if it had access to everything the Sonos app does
 
 ## Features
-Sonos Web is a developing project and is not yet feature complete. If you would like to see a feature developed, please [open an issue](https://github.com/Villarrealized/sonos-web/issues/new).
-
  * Music Library
     * Search your entire music library with Top Results *
       * Including Sonos Playlists! *
@@ -62,15 +82,6 @@ Sonos Web is a developing project and is not yet feature complete. If you would 
     * Spotify (added in v0.9.0)
       * Allow searching of Spotify
  * Recent Play History
-
-## Install
-
-TBD.
-
-## Docker Support
-
-TBD.
-
 
 ## Screenshots
 
@@ -110,16 +121,6 @@ TBD.
 ### Adjust volume as a group or as individual rooms
 ![Grouped Rooms & Individual Volume Adjustment](https://user-images.githubusercontent.com/5977736/50566804-fdbead80-0cfa-11e9-86c9-21290ff33288.png)
 
-
-## Issues or Questions
-If you have any issues or a questions feel free to [open an issue](https://github.com/Villarrealized/sonos-web/issues/new)
-
-## Support
-Suggestions and feedback are always welcome. 
-
-If you like Sonos Web and would like to help fund further development of this project, you can do so through Beerpay.
-[![Beerpay](https://beerpay.io/Villarrealized/sonos-web/badge.svg?style=beer)](https://beerpay.io/Villarrealized/sonos-web)
-
-
 ## License
-[GPL v3.0](https://github.com/Villarrealized/sonos-web-cli/blob/master/LICENSE)
+[GPL v3.0](LICENSE)
+
