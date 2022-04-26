@@ -325,11 +325,10 @@ export default {
       },
       set(volume) {
         console.log('volume set', volume);
-      //   if (this.activeZoneGroup) {
-      //     this.$store.commit('UPDATE_ZONE_GROUP'
-      // , { groupId: this.activeZoneGroupId, update: { volume } });
-      //     groupsAPI.volume(this.activeZoneGroupId, volume);
-      //   }
+        if (this.activeZoneGroup) {
+          this.$store.commit('UPDATE_ZONE_GROUP', { groupId: this.activeZoneGroupId, update: { volume } });
+          groupsAPI.volume(this.activeZoneGroupId, volume);
+        }
       },
     },
     trackElapsedTime() {
